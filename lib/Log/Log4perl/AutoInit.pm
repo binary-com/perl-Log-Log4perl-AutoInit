@@ -99,7 +99,7 @@ sub _init {
 
 =head1 AUTHOR
 
-Chris Travers, C<< <christravers at binary.com> >>
+Binary.com, C<< <perl@binary.com> >>
 
 =head1 BUGS
 
@@ -143,9 +143,7 @@ L<http://search.cpan.org/dist/Log-Log4perl-AutoInit/>
 =head1 ACKNOWLEDGEMENTS
 
 
-=head1 LICENSE AND COPYRIGHT
-
-Copyright 2014 Regent Markets (M) Sdn Bhd, 2014.
+=head1 LICENSE 
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the the Artistic License (2.0). You may obtain a
