@@ -98,7 +98,7 @@ explicitly reinitialized.
 
 sub initialize_now {
    my $re_init = shift;
-   my $re_init = shift if $re_init eq __PACKAGE__;
+   $re_init = shift if $re_init eq __PACKAGE__;
    $initialized = 0 if $re_init;
     _init();
 }
