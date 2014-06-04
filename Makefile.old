@@ -62,11 +62,11 @@ DIRFILESEP = /
 DFSEP = $(DIRFILESEP)
 NAME = Log::Log4perl::AutoInit
 NAME_SYM = Log_Log4perl_AutoInit
-VERSION = 0.03
+VERSION = 0.04
 VERSION_MACRO = VERSION
-VERSION_SYM = 0_03
+VERSION_SYM = 0_04
 DEFINE_VERSION = -D$(VERSION_MACRO)=\"$(VERSION)\"
-XS_VERSION = 0.03
+XS_VERSION = 0.04
 XS_VERSION_MACRO = XS_VERSION
 XS_DEFINE_VERSION = -D$(XS_VERSION_MACRO)=\"$(XS_VERSION)\"
 INST_ARCHLIB = blib/arch
@@ -258,7 +258,7 @@ RCS_LABEL = rcs -Nv$(VERSION_SYM): -q
 DIST_CP = best
 DIST_DEFAULT = tardist
 DISTNAME = Log-Log4perl-AutoInit
-DISTVNAME = Log-Log4perl-AutoInit-0.03
+DISTVNAME = Log-Log4perl-AutoInit-0.04
 
 
 # --- MakeMaker macro section:
@@ -441,22 +441,22 @@ clean_subdirs :
 
 clean :: clean_subdirs
 	- $(RM_F) \
-	  $(INST_ARCHAUTODIR)/extralibs.ld *$(LIB_EXT) \
-	  perl.exe $(BASEEXT).bso \
-	  blibdirs.ts core.[0-9][0-9][0-9][0-9][0-9] \
-	  *perl.core core.*perl.*.? \
-	  perl tmon.out \
-	  perl$(EXE_EXT) core \
-	  $(BASEEXT).exp $(BASEEXT).def \
-	  so_locations core.[0-9][0-9][0-9] \
+	  blibdirs.ts perl.exe \
+	  core.[0-9][0-9][0-9] $(INST_ARCHAUTODIR)/extralibs.all \
+	  $(BOOTSTRAP) core \
+	  $(BASEEXT).x lib$(BASEEXT).def \
+	  *perl.core core.[0-9][0-9][0-9][0-9][0-9] \
 	  MYMETA.json *$(OBJ_EXT) \
-	  $(MAKE_APERL_FILE) perlmain.c \
-	  $(INST_ARCHAUTODIR)/extralibs.all MYMETA.yml \
-	  core.[0-9][0-9][0-9][0-9] core.[0-9][0-9] \
-	  lib$(BASEEXT).def $(BASEEXT).x \
-	  $(BOOTSTRAP) core.[0-9] \
-	  pm_to_blib.ts mon.out \
-	  pm_to_blib 
+	  core.*perl.*.? pm_to_blib \
+	  tmon.out perlmain.c \
+	  $(BASEEXT).exp perl \
+	  *$(LIB_EXT) core.[0-9][0-9][0-9][0-9] \
+	  $(MAKE_APERL_FILE) $(BASEEXT).bso \
+	  core.[0-9][0-9] MYMETA.yml \
+	  mon.out so_locations \
+	  core.[0-9] pm_to_blib.ts \
+	  $(BASEEXT).def $(INST_ARCHAUTODIR)/extralibs.ld \
+	  perl$(EXE_EXT) 
 	- $(RM_RF) \
 	  blib Log-Log4perl-AutoInit-* 
 	- $(NOECHO) $(RM_F) $(MAKEFILE_OLD)
@@ -502,7 +502,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) 'requires:' >> META_new.yml
 	$(NOECHO) $(ECHO) '  Log::Log4perl: 0' >> META_new.yml
 	$(NOECHO) $(ECHO) '  perl: 5.006' >> META_new.yml
-	$(NOECHO) $(ECHO) 'version: 0.03' >> META_new.yml
+	$(NOECHO) $(ECHO) 'version: 0.04' >> META_new.yml
 	-$(NOECHO) $(MV) META_new.yml $(DISTVNAME)/META.yml
 	$(NOECHO) $(ECHO) Generating META.json
 	$(NOECHO) $(ECHO) '{' > META_new.json
@@ -545,7 +545,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '      }' >> META_new.json
 	$(NOECHO) $(ECHO) '   },' >> META_new.json
 	$(NOECHO) $(ECHO) '   "release_status" : "stable",' >> META_new.json
-	$(NOECHO) $(ECHO) '   "version" : "0.03"' >> META_new.json
+	$(NOECHO) $(ECHO) '   "version" : "0.04"' >> META_new.json
 	$(NOECHO) $(ECHO) '}' >> META_new.json
 	-$(NOECHO) $(MV) META_new.json $(DISTVNAME)/META.json
 
