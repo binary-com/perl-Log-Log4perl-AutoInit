@@ -6,6 +6,8 @@ In essence it provides a way to delay logger initialization until the logger is 
 
 [![Build Status](https://travis-ci.org/binary-com/perl-Log-Log4perl-AutoInit.svg?branch=master)](https://travis-ci.org/binary-com/perl-Log-Log4perl-AutoInit)
 
+[![Coverage Status](https://coveralls.io/repos/binary-com/perl-Log-Log4perl-AutoInit/badge.png)](https://coveralls.io/r/binary-com/perl-Log-Log4perl-AutoInit)
+
 
 SYNOPSIS
 
