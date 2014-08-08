@@ -19,15 +19,15 @@ Version 1.0.0
 
 =cut
 
-our $VERSION = '1.0.0';
+our $VERSION = '1.0.1';
 
 
 =head1 SYNOPSIS
 
-use Log::Log4perl::AutoInit qw(get_logger);
-Log::Log4perl::AutoInit->set_config('path/to/l4p.conf');
+ use Log::Log4perl::AutoInit qw(get_logger);
+ Log::Log4perl::AutoInit->set_config('path/to/l4p.conf');
 
-get_logger->warning('l4p initialized and warning logged');
+ get_logger->warning('l4p initialized and warning logged');
 
 =head1 DESCRIPTION
 
@@ -36,6 +36,12 @@ initialization may need to be delayed until a statup process is complete, but
 where configuration may need to be registered before that point.  In essence
 it provides a way to delay logger initialization until the logger is actually
 needed or used.
+
+A key use for this is for daemons where configuration may be set on loading a 
+Perl module, but where file handles may be subsequently closed.  This module 
+allows you to delay initialization until you are actually logging, with an 
+ability to initialize the logger at a specific point and reinitialize if 
+necessary.
 
 =head1 EXPORT
 
@@ -47,7 +53,9 @@ needed or used.
 =head2 set_config
 
 This API sets the configuration for subsequent logger initialization.  This 
-only caches the config and does no initialization itself.
+only caches the config and does no initialization itself.  This is safe to call
+at any point in the program but if logging is already being done, you must
+reinitialize (see initialize_now() below).
 
 =cut
 
@@ -75,7 +83,8 @@ sub set_default_category {
 =head2 get_logger
 
 Initializes, if necessary, and returns a logger with the identical syntax to
-Log4perl::get_logger()
+Log4perl::get_logger().  If you close the file handles out from under the 
+logger, you must reinitialize immediately after.  See initialize_now() below.
 
 =cut
 
@@ -92,7 +101,8 @@ my $initialized = 0; # move to state when we can drop 5.8 support
 =head2 initialize_now(bool $reinitialize);
 
 This initializes Log4perl.  If $reinitialize is set, it allows Log4perl to be 
-explicitly reinitialized.
+explicitly reinitialized.  This can be used to force a reinitialization, for 
+example after file handles have been closed or after a configuration change.
 
 =cut
 
