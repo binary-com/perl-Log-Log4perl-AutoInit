@@ -5,9 +5,8 @@ Log::Log4perl::AutoInit module provides a simple wrapper around Log::Log4perl fo
 In essence it provides a way to delay logger initialization until the logger is actually needed or used.
 
 [![Build Status](https://travis-ci.org/binary-com/perl-Log-Log4perl-AutoInit.svg?branch=master)](https://travis-ci.org/binary-com/perl-Log-Log4perl-AutoInit)
-
 [![Coverage Status](https://coveralls.io/repos/binary-com/perl-Log-Log4perl-AutoInit/badge.png)](https://coveralls.io/r/binary-com/perl-Log-Log4perl-AutoInit)
-
+[![Gitter chat](https://badges.gitter.im/binary-com/perl-Log-Log4perl-AutoInit.png)](https://gitter.im/binary-com/perl-Log-Log4perl-AutoInit)
 
 SYNOPSIS
 
@@ -88,5 +87,4 @@ PURPOSE, OR NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY
 YOUR LOCAL LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR
 CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR
 CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE,
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+EVEN IF ADVISED OF THE POSSI
