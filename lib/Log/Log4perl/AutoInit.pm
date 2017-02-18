@@ -5,17 +5,13 @@ use strict;
 use warnings FATAL => 'all';
 use Log::Log4perl;
 
-use base qw( Exporter );                                                        
+use base qw( Exporter );
 our @EXPORT_OK = qw( init_log4perl get_logger );
 
 
 =head1 NAME
 
 Log::Log4perl::AutoInit - Log4Perl with autoinitialization.
-
-=head1 VERSION
-
-Version 1.0.0
 
 =cut
 
