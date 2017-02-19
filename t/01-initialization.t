@@ -20,6 +20,5 @@ my $appenders;
 ok($appenders = Log::Log4perl::appenders(), 'Got an appenders list');
 Log::Log4perl::AutoInit::set_config(\$config2);
 ok(get_logger, 'Got a logger the second time.');
-is_deeply( Log::Log4perl::appenders(), $appenders, 
-     "Appenders unchanged by second config");
+is_deeply(Log::Log4perl::appenders(), $appenders, "Appenders unchanged by second config");
 

@@ -8,7 +8,6 @@ use Log::Log4perl;
 use base qw( Exporter );
 our @EXPORT_OK = qw( init_log4perl get_logger );
 
-
 =head1 NAME
 
 Log::Log4perl::AutoInit - Log4Perl with autoinitialization.
@@ -16,7 +15,6 @@ Log::Log4perl::AutoInit - Log4Perl with autoinitialization.
 =cut
 
 our $VERSION = '1.0.1';
-
 
 =head1 SYNOPSIS
 
@@ -60,6 +58,7 @@ my $l4p_config;
 sub set_config {
     $l4p_config = shift;
     $l4p_config = shift if $l4p_config eq __PACKAGE__;
+    return;
 }
 
 =head2 set_default_category
@@ -74,6 +73,7 @@ my $default_category;
 sub set_default_category {
     $default_category = shift;
     $default_category = shift if $default_category eq __PACKAGE__;
+    return;
 }
 
 =head2 get_logger
@@ -85,14 +85,14 @@ logger, you must reinitialize immediately after.  See initialize_now() below.
 =cut
 
 sub get_logger {
-    _init();
     my $category = $_[0];
+    _init();
     $category = $default_category unless defined $category;
-    $category = (caller)[0] unless defined $category;
+    $category = (caller)[0]       unless defined $category;
     return Log::Log4perl::get_logger($category);
 }
 
-my $initialized = 0; # move to state when we can drop 5.8 support
+my $initialized = 0;    # move to state when we can drop 5.8 support
 
 =head2 initialize_now(bool $reinitialize);
 
@@ -103,9 +103,9 @@ example after file handles have been closed or after a configuration change.
 =cut
 
 sub initialize_now {
-   my $re_init = shift;
-   $re_init = shift if $re_init eq __PACKAGE__;
-   $initialized = 0 if $re_init;
+    my $re_init = shift;
+    $re_init     = shift if $re_init eq __PACKAGE__;
+    $initialized = 0     if $re_init;
     _init();
 }
 
@@ -116,7 +116,6 @@ sub _init {
     ++$initialized;
     Log::Log4perl->init($l4p_config);
 }
-
 
 =head1 AUTHOR
 
@@ -205,4 +204,4 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =cut
 
-1; # End of Log::Log4perl::AutoInit
+1;    # End of Log::Log4perl::AutoInit
