@@ -5,22 +5,16 @@ use strict;
 use warnings FATAL => 'all';
 use Log::Log4perl;
 
-use base qw( Exporter );                                                        
+use base qw( Exporter );
 our @EXPORT_OK = qw( init_log4perl get_logger );
-
 
 =head1 NAME
 
 Log::Log4perl::AutoInit - Log4Perl with autoinitialization.
 
-=head1 VERSION
-
-Version 1.0.0
-
 =cut
 
 our $VERSION = '1.0.1';
-
 
 =head1 SYNOPSIS
 
@@ -31,16 +25,16 @@ our $VERSION = '1.0.1';
 
 =head1 DESCRIPTION
 
-This module provides a simple wrapper around Log::Log4perl for cases where 
-initialization may need to be delayed until a statup process is complete, but 
+This module provides a simple wrapper around Log::Log4perl for cases where
+initialization may need to be delayed until a statup process is complete, but
 where configuration may need to be registered before that point.  In essence
 it provides a way to delay logger initialization until the logger is actually
 needed or used.
 
-A key use for this is for daemons where configuration may be set on loading a 
-Perl module, but where file handles may be subsequently closed.  This module 
-allows you to delay initialization until you are actually logging, with an 
-ability to initialize the logger at a specific point and reinitialize if 
+A key use for this is for daemons where configuration may be set on loading a
+Perl module, but where file handles may be subsequently closed.  This module
+allows you to delay initialization until you are actually logging, with an
+ability to initialize the logger at a specific point and reinitialize if
 necessary.
 
 =head1 EXPORT
@@ -52,7 +46,7 @@ necessary.
 
 =head2 set_config
 
-This API sets the configuration for subsequent logger initialization.  This 
+This API sets the configuration for subsequent logger initialization.  This
 only caches the config and does no initialization itself.  This is safe to call
 at any point in the program but if logging is already being done, you must
 reinitialize (see initialize_now() below).
@@ -64,6 +58,7 @@ my $l4p_config;
 sub set_config {
     $l4p_config = shift;
     $l4p_config = shift if $l4p_config eq __PACKAGE__;
+    return;
 }
 
 =head2 set_default_category
@@ -78,39 +73,40 @@ my $default_category;
 sub set_default_category {
     $default_category = shift;
     $default_category = shift if $default_category eq __PACKAGE__;
+    return;
 }
 
 =head2 get_logger
 
 Initializes, if necessary, and returns a logger with the identical syntax to
-Log4perl::get_logger().  If you close the file handles out from under the 
+Log4perl::get_logger().  If you close the file handles out from under the
 logger, you must reinitialize immediately after.  See initialize_now() below.
 
 =cut
 
 sub get_logger {
+    my $category = shift;
     _init();
-    my $category = $_[0];
     $category = $default_category unless defined $category;
-    $category = (caller)[0] unless defined $category;
+    $category = (caller)[0]       unless defined $category;
     return Log::Log4perl::get_logger($category);
 }
 
-my $initialized = 0; # move to state when we can drop 5.8 support
+my $initialized = 0;    # move to state when we can drop 5.8 support
 
 =head2 initialize_now(bool $reinitialize);
 
-This initializes Log4perl.  If $reinitialize is set, it allows Log4perl to be 
-explicitly reinitialized.  This can be used to force a reinitialization, for 
+This initializes Log4perl.  If $reinitialize is set, it allows Log4perl to be
+explicitly reinitialized.  This can be used to force a reinitialization, for
 example after file handles have been closed or after a configuration change.
 
 =cut
 
 sub initialize_now {
-   my $re_init = shift;
-   $re_init = shift if $re_init eq __PACKAGE__;
-   $initialized = 0 if $re_init;
-    _init();
+    my $re_init = shift;
+    $re_init     = shift if $re_init eq __PACKAGE__;
+    $initialized = 0     if $re_init;
+    return _init();
 }
 
 # private method for for initialization
@@ -118,9 +114,8 @@ sub initialize_now {
 sub _init {
     return if $initialized;
     ++$initialized;
-    Log::Log4perl->init($l4p_config);
+    return Log::Log4perl->init($l4p_config);
 }
-
 
 =head1 AUTHOR
 
@@ -167,46 +162,6 @@ L<http://search.cpan.org/dist/Log-Log4perl-AutoInit/>
 
 =head1 ACKNOWLEDGEMENTS
 
-
-=head1 LICENSE 
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the the Artistic License (2.0). You may obtain a
-copy of the full license at:
-
-L<http://www.perlfoundation.org/artistic_license_2_0>
-
-Any use, modification, and distribution of the Standard or Modified
-Versions is governed by this Artistic License. By using, modifying or
-distributing the Package, you accept this license. Do not use, modify,
-or distribute the Package, if you do not accept this license.
-
-If your Modified Version has been derived from a Modified Version made
-by someone other than you, you are nevertheless required to ensure that
-your Modified Version complies with the requirements of this license.
-
-This license does not grant you the right to use any trademark, service
-mark, tradename, or logo of the Copyright Holder.
-
-This license includes the non-exclusive, worldwide, free-of-charge
-patent license to make, have made, use, offer to sell, sell, import and
-otherwise transfer the Package with respect to any patent claims
-licensable by the Copyright Holder that are necessarily infringed by the
-Package. If you institute patent litigation (including a cross-claim or
-counterclaim) against any party alleging that the Package constitutes
-direct or contributory patent infringement, then this Artistic License
-to you shall terminate on the date that such litigation is filed.
-
-Disclaimer of Warranty: THE PACKAGE IS PROVIDED BY THE COPYRIGHT HOLDER
-AND CONTRIBUTORS "AS IS' AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES.
-THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-PURPOSE, OR NON-INFRINGEMENT ARE DISCLAIMED TO THE EXTENT PERMITTED BY
-YOUR LOCAL LAW. UNLESS REQUIRED BY LAW, NO COPYRIGHT HOLDER OR
-CONTRIBUTOR WILL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, OR
-CONSEQUENTIAL DAMAGES ARISING IN ANY WAY OUT OF THE USE OF THE PACKAGE,
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
 =cut
 
-1; # End of Log::Log4perl::AutoInit
+1;    # End of Log::Log4perl::AutoInit
